@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard move</title>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
+</head>
+<body>
+    
+<script>
+    let app;
+     let player;
+
+    //  e krijojna nje array per key movements
+     let keys = {};
+   
+    //  qekjo e krijon katrorin e perhimt
+   window.onload = function(){
+    app = new PIXI.Application({
+        width: 800,
+        height: 600,
+        backgroundColor: 0xAAAAAA
+    });
+    // qekjo e vendos ne body ate katror qe e kemi kriju
+    document.body.appendChild(app.view);
+
+    // qekjo e krijon nje texture te fotografise ku e bojme store 
+    let texture = PIXI.Texture.from("katrori.png");
+
+    // Na vyn me kriju nje karakter (sprite) 
+    player = new PIXI.Sprite(texture);
+
+    // e vendos ne mes te faqes Sprite qe e kemi krijuar
+    player.anchor.set(0.5);
+    player.x = app.view.width /2;
+    player.y = app.view.height /2;
+
+    // qekjo e vendos sprite ne katrorin e hinte
+    app.stage.addChild(player);
+
+    // qetu i bejme funks per keyboard movements
+
+    // ana e majte brenda kllapave eshte eventi qe ka me ndodh . Kurse ana e djathte eshte funksioni qe ka me u b o run
+window.addEventListener("keydown", keysDown);
+window.addEventListener("keyup", keysUp);
+
+
+function keysDown(e) {
+    console.log(e.keyCode);
+    keys[e.keyCode] = true;
+}
+
+function keysUp(e) {
+    keys[e.keyCode] = false;
+}
+
+app.ticker.add(gameLoop);
+
+function gameLoop() {
+
+    // qekjo ke up shigjeta
+    if (keys["38"]) {
+        player.y -= 5; 
+    }
+
+    // qekjo ke shigjeta down
+    if (keys["40"]) {
+        player.y += 5; 
+    }
+
+    // shigjeta left
+    if (keys["37"]) {
+        player.x -= 15; 
+    }
+
+    // shigjeta right
+
+    if (keys["39"]) {
+        player.x += 25; 
+    }
+}
+    
+
+
+
+   }
+</script>
+
+</body>
+</html>
