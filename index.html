@@ -15,6 +15,33 @@
     //  e krijojna nje array per key movements
      let keys = {};
    
+    let arrays = [];
+    // qekjo krijon nje texture per pluma/shigj
+    let arraysTexture = PIXI.Texture.from("array.png");
+
+    function shootBullet() {
+        let bullet = new PIXI.Sprite(arraysTexture);
+        bullet.anchor.set(0.5);
+        bullet.x = player.x;
+        bullet.y = player.y;
+        app.stage.addChild(bullet);
+        arrays.push(bullet);
+    }
+
+    function moveBullets() {
+        arrays.forEach(bullet => {
+            bullet.y -= 5;
+
+            if (bullet.y <0 ) {
+                app.stage.removeChild(bullet);
+                arrays.splice(arrays.indexOf(bullet), 1);
+            }
+        }
+
+        )
+    }
+
+
     //  qekjo e krijon katrorin e perhimt
    window.onload = function(){
     app = new PIXI.Application({
@@ -71,17 +98,22 @@ function gameLoop() {
 
     // shigjeta left
     if (keys["37"]) {
-        player.x -= 15; 
+        player.x -= 5; 
     }
 
     // shigjeta right
 
     if (keys["39"]) {
-        player.x += 25; 
+        player.x +=  5; 
     }
-}
-    
 
+    if (keys["13"]){
+        shootBullet();
+    }
+     moveBullets();
+}
+   
+    
 
 
    }
