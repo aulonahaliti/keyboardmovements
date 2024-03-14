@@ -16,8 +16,13 @@
      let keys = {};
    
     let arrays = [];
+
+    // Array to store challenges.
+    let challenges = []; 
+
     // qekjo krijon nje texture per pluma/shigj
     let arraysTexture = PIXI.Texture.from("array.png");
+    let challengeTexture = PIXI.Texture.from("rrufe.png");
 
     function shootBullet() {
         let bullet = new PIXI.Sprite(arraysTexture);
@@ -41,6 +46,31 @@
         )
     }
 
+    function createChallenge() {
+        let challenge = new PIXI.Sprite(challengeTexture);
+        challenge.anchor.set(0.5);
+        // 
+        challenge.x = Math.random() * app.view.width;
+        // start above the height of gray box 
+        challenge.y = -50;  
+        app.stage.addChild(challenge);
+        challenges.push(challenge);
+    }
+
+    function moveChallenges() {
+        challenges.forEach(challenge => {
+            // move challenges downward.
+            challenge.y += 3; 
+            // kushti qe duhet te ndodh nese challenges jane me te medha se sa gjatesia e gray box
+            if (challenge.y > app.view.height ) {
+                // remove challenges when it touches the screen of gray box at the bottom
+                app.stage.removeChild(challenge);
+                challenges.splice(challenges.indexOf(challenge), 1);
+            }
+        }
+
+        )
+    }
 
     //  qekjo e krijon katrorin e perhimt
    window.onload = function(){
@@ -111,6 +141,12 @@ function gameLoop() {
         shootBullet();
     }
      moveBullets();
+     
+     if (Math.random() < 0.01) {
+        createChallenge();
+     }
+
+     moveChallenges();
 }
    
     
